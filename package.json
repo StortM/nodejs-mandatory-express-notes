@@ -1,0 +1,15 @@
+{
+  "name": "mandatory-1-doc-website",
+  "description": "A website built with Node.js and express detailing what has been learned so far in the Node.js elective",
+  "author": "Mads Kjærgaard Christensen <mads38g6@stud.kea.dk",
+  "version": "1.0.0",
+
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+
+  "scripts": {
+    "start": "node app.js",
+    "start-dev": "set PORT=3000 & nodemon app.js"
+  }
+}

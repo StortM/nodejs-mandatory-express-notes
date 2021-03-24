@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Express</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../css/custom.css" rel="stylesheet"/>
+    <link href="../css/prism.css" rel="stylesheet"/>
+</head>
+<body class="line-numbers">
+<p class="text-muted text-center">Mads Kjærgaard Christensen, Fullstack Node.js (Spring 2021)</p>
+<div class="container container-nav" id="navbar-top">
+    <nav class="navbar navbar-expand-md navbar-light bg-light rounded-pill">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExampleDefault">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/notes/javascript">Javascript</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/notes/nodejs">Node.js</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/notes/express">Express</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<main class="container">
+
+    <div class="text-center py-5 px-3">
+        <h1>Express</h1>
+        <p class="lead">
+            ... "is a fast, unopinionated, minimalist web framework for Node.js".<br>
+            Express can be used to create web applications or create APIs and is perhaps the most used Node.js server framework.
+        </p>
+
+        <div class="card container-contents bg-light">
+            <h5>Table of Contents</h5>
+            <ol>
+                <li><a href="#note-basics">basics</a></li>
+                <li><a href="#note-endpoints">endpoints</a></li>
+                <li><a href="#note-static">static content</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <section id="note-basics">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">basics</h1><br>
+                <h5>Setting up express</h5>
+                <p class="card-text">
+                    Express is a Node.js module and can as such be installed through the node package manager (npm).<br>
+                    This is done by running the <code class="language-javascript">npm install express</code> command.<br>
+                    Alternatively one could add the dependency to the package.json file and simply run <code class="language-javascript">npm install</code>
+                    to install any uninstalled dependencies.
+                </p><br>
+
+                <h5>App.js</h5>
+                <p class="card-text">
+                    After installation one would typically create an "app.js" file to act as the server application file, as is convention.<br><br>
+
+                    A basic app.js file could look like the following:
+                </p>
+<pre><code class="language-javascript">const express = require('express')
+const app = express()
+const port = 3000
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+})</code></pre>
+
+                <p class="card-text">
+                    <code class="language-javascript">const express = require('express')</code><br> means that
+                    the express module is imported through the
+                    <code class="language-javascript">require</code> keyword.<br><br>
+                    This keyword is unique to Node.js and basically reads and executes a Javascript file,
+                    returning an exports object, defined in said file.<br><br>
+
+                    Now that express is imported it is possible to instantiate an express application by calling
+                    the constructor of the express variable, and saving it into an "app" variable.<br><br>
+                    This app variable now contains what is returned by the <code class="language-javascript">createApplication()</code> function
+                    found inside the <i>"/node_modules/express/lib/express.js"</i> file.<br><br>
+
+                    Last but not least a port is defined, in this case <code class="language-javascript">3000</code>,
+                    which is to be used as the listening port of the server.
+                </p><br>
+
+                <h5>Starting the server</h5>
+                <p class="card-text">
+                    In order to start the server one must call the <code class="language-javascript">listen()</code>
+                    method of the app object.<br><br>
+
+                    The method takes the following optional arguments: port, hostname, backlog and callback.<br>
+                    If no port is specified it is up to the operation system to assign one, so this argument would
+                    normally be given.<br><br>
+                    The callback argument is also desirable as it makes it possible to
+                    <code class="language-javascript">console.log()</code>
+                    potential errors and a successful start of the server, as seen in the example earlier.<br><br>
+
+                    When all is done you can run the app.js file through the <code class="language-javascript">node
+                    app.js</code> command
+                    and have the server listening at the specified port (if any).
+                </p><br>
+
+                <h5>Configuring JSON parser</h5>
+                <p class="card-text">
+                    In order to be able to parse json in express you must configure it through the "app" object.<br>
+                    This can be done in a simple line:<br><br>
+                    <code class="language-javascript">app.use(express.json())</code><br><br>
+                    This is important to do when creating REST apis. Without it express won't be able to parse json requests
+                    and so you will not be able to use data recieved through requests using GET, PUT etc.
+                </p>
+                <div>
+                    <h6>Sources</h6>
+                    <ol>
+                        <li><a href="https://www.npmjs.com/package/express">npm - express</a></li>
+                        <li><a href="https://expressjs.com/en/starter/hello-world.html">expressjs - Hello world example</a></li>
+                        <li><a href="http://expressjs.com/en/api.html#app.listen">expressjs api - app.listen()</a></li>
+                        <li><a href="https://nodejs.org/en/knowledge/getting-started/what-is-require/">nodejs - What is require?</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="note-endpoints">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">endpoints</h1>
+                <p class="card-text">
+                    Endpoints are a way of defining an "access point" for a client to communicate with the express server.
+                    An endpoint consists of a URI and a specific HTTP request method
+                    like <code class="language-javascript">GET</code> <code class="language-javascript">POST</code> and
+                    so on.<br><br>
+
+                    Endpoints are created by calling the HTTP specific verb on the app variable:<br><br>
+                    <code class="language-javascript">app.get</code><br>
+                    <code class="language-javascript">app.put</code><br>
+                    <code class="language-javascript">app.delete</code><br>
+                    and so on...<br><br>
+
+                    An endpoint will take the arguments of a path and a callback.<br><br>
+                    In the callback you provide the parameter "req" and "res" which can be used to interact with the
+                    incoming request or the outgoing response.<br>
+                </p>
+
+                <h6>Example of a GET endpoint</h6>
+
+<pre><code class="language-javascript">app.get('/', function (req, res) {
+    res.send('Hello World!')
+})</code></pre><br><br>
+
+                <h5>Request and response</h5>
+                <p class="card-text">
+                    Through the request it is possible to interact with an incoming query string,
+                    and through the response it is possible to send it back to the client as a string.<br><br>
+                </p>
+
+                <h6>Query strings</h6>
+                <p class="card-text">
+                    Query strings work in key:value pairs and can be chained by the "&" symbol.
+                    As such the key is querystring and value is Hello in the example below<br><br>
+                    <code class="language-javascript">http://localhost:3000/querystring?=Hello</code>
+                </p>
+
+<pre><code class="language-javascript">app.get("/querystring", (req, res) => {
+    const query = req.query
+
+    res.send(query) // will send the string "hello"
+})</code></pre><br>
+
+                <h6>Path variables</h6>
+                <p class="card-text">
+                    It is also possible to interact with a path variable<br>
+                    and respond with a json containing information from the path variables.<br><br>
+
+                    <code class="language-javascript">http://localhost:3000/pathvariable/Inception/a%20good%20movie</code>
+                </p>
+
+<pre><code class="language-javascript">app.get("/pathvariable/:title/:message", (req, res) => {
+    let message = req.params.message
+    let title = req.params.title
+
+    res.send({
+        "title": title,
+        "message": message
+        })
+})</code></pre>
+
+                <p class="card-text">This would output the following json to the client:</p>
+<pre><code class="language-json">{
+    "title": "Inception",
+    "message": "a good movie"
+}</code></pre><br>
+                <div>
+                    <h6>Sources</h6>
+                    <ol>
+                        <li>"0._Misc\2._Data_Server" - Notes and examples</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="note-static">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">static content</h1>
+                <p class="card-text">
+                    "Static content is any content that can be delivered to an end user without having to be generated,
+                    modified, or processed."<br><br>
+                    Static content can be html pages, images or files.<br><br>
+
+                    The client is by default not allowed to access server files in express. Therefore the server must be
+                    configured to allow this.
+                    This is done by telling the server to allow a specific directory (and sub-directories) to be served.<br><br>
+                    In express the convention is to name the directory <code
+                        class="language-javascript">public</code><br>
+                </p><br>
+
+                <h6>Configuring express to allow static content</h6>
+                <code class="language-javascript">app.use(express.static("public"))</code><br><br>
+                <div>
+                    <h6>Sources</h6>
+                    <ol>
+                        <li><a href="https://blog.stackpath.com/static-content/">Stackpath - What is Static Content?</a>
+                        </li>
+                        <li><a href="https://expressjs.com/en/starter/static-files.html">expressjs - Serving static
+                            files in Express</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <a class="btn btn-primary" id="goto-top-button" href="#">Go to top</a>
+
+</main>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/prism.js"></script>
+</body>
+</html>

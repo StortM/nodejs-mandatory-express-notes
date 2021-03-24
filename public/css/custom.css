@@ -1,0 +1,71 @@
+/* https://getbootstrap.com/docs/5.0/utilities/colors/ */
+
+body {
+    padding-top: 1rem;
+}
+
+/* https://stackoverflow.com/questions/13867717/how-to-make-divs-percentage-width-relative-to-parent-div-and-not-viewport */
+.card-note {
+    width: 60%;
+    margin: 0 auto 2rem;
+    position: relative;
+}
+
+/* Alternativ måde at style lister..
+ol {
+    counter-reset: counter;
+}
+
+ol li {
+    counter-increment: counter;
+}
+
+ol li:before {
+    content: counters(counter, ".") " ";
+}
+*/
+
+.container-contents {
+    display: table;
+    padding: 1rem 15px 7px 15px;
+    margin: 0 auto;
+}
+
+.container-contents ol {
+    display: inline-block;
+    list-style-position: inside;
+    padding-left: inherit;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-body ol {
+    display: inline-block;
+    list-style-position: inside;
+    text-align: center;
+    padding-left: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.card-body pre {
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.card-body code {
+    border-radius: 10px;
+}
+
+#goto-top-button {
+    position: fixed;
+    top: 2%;
+    right: 2%;
+}

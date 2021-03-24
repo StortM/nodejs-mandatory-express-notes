@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../css/custom.css" rel="stylesheet"/>
+    <link href="../css/prism.css" rel="stylesheet"/>
+</head>
+<body class="line-numbers">
+<p class="text-muted text-center">Mads Kjærgaard Christensen, Fullstack Node.js (Spring 2021)</p>
+<div class="container container-nav" id="navbar-top">
+    <nav class="navbar navbar-expand-md navbar-light bg-light rounded-pill">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExampleDefault">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/notes/javascript">Javascript</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/notes/nodejs">Node.js</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/notes/express">Express</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<main class="container">
+
+    <div class="text-center py-5 px-3">
+        <h1>Javascript</h1>
+        <p class="lead">
+            ... is an interpreted, loosely typed and dynamic language with first-class functions.<br>
+            Javascript is most well-known as the scripting language for web-pages, but is also used in many non-browser
+            environments
+            like Node.js.
+        </p>
+
+        <div class="card container-contents bg-light">
+            <h5>Table of Contents</h5>
+            <ol>
+                <li><a href="#note-functions">functions</a></li>
+                <li><a href="#note-functions-expressions">function expressions</a></li>
+                <li><a href="#note-functions-arrow">arrow functions</a></li>
+                <li><a href="#note-functions-callback">callback functions</a></li>
+                <li><a href="#note-variables">variables</a></li>
+                <li><a href="#note-method-map">map method</a></li>
+                <li><a href="#note-method-reduce">reduce method</a></li>
+                <li><a href="#note-operator-spread">spread operator</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <!--
+        <section id="note-template">
+            <div class="card card-note text-center">
+                <div class="card-body">
+                    <h1 class="card-title display-6">Title</h1>
+                    <p class="card-text">Her kan være en beskrivelse...</p>
+                    <h5>Header</h5>
+                    <p class="card-text">
+
+                    </p>
+                    <div>
+                        <h6>Sources</h6>
+                        <ol>
+
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        --->
+
+    <!-- https://getbootstrap.com/docs/4.0/content/code/ -->
+    <section id="note-functions">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">functions</h1>
+                <br>
+                <h5>Function declarations</h5>
+                <p class="card-text">
+                    Functions are one of the fundamental building blocks in Javascript.
+                    They can take input in terms of parameters, and perform a task or calculate a value,
+                    which can then be returned via the <code class="language-javascript">return</code>
+                    keyword.<br><br>
+
+                    Function declarations are hoisted in Javascript, which means that it is possible to call a
+                    function
+                    before it is declared.
+
+                    Functions are declared by the <code class="language-javascript">function</code> keyword,
+                    a name for the function, a pair of parantheses containing the parameters (if any),
+                    and lastly followed by a pair of curly brackets encapsulating the scope of the function.
+                </p>
+                <h6>Example of a basic function declaration</h6>
+                        <pre><code class="language-javascript">function myFunction(number1, number2) {
+    return number1 + number2;
+}</code></pre><br>
+                        <h5>First-class Citizens</h5>
+                        <p class="card-text">
+                            Functions in javascript are also said to be first-class citizens.
+                            Which means they are treated as any other variable and that a function can:
+                        <ul class="list-unstyled">
+                            <li>... be passed as an argument to another function</li>
+                            <li>... be returned from another function</li>
+                            <li>... be assigned as a value to a variable</li>
+                        </ul>
+                        </p><br>
+
+                        <h5>Pass by value or reference?</h5>
+                        <p class="card-text">
+                            Primitive arguments (numbers for example) are passed by value, whereas objects are passed
+                            by reference.<br><br>
+                            This means that a change in a numbers value would not be reflected globally,
+                            whereas a change in an objects state would be visible outside of the function.<br><br>
+                        </p>
+
+                        <h6>Example taken from source 1</h6>
+<pre><code class="language-javascript">function myFunc(theObject) {
+  theObject.make = 'Toyota';
+}
+
+let mycar = {make: 'Honda', model: 'Accord', year: 1998};
+let x, y;
+
+x = mycar.make; // x gets the value "Honda"
+
+myFunc(mycar);
+y = mycar.make; // y gets the value "Toyota"
+                // (the make property was changed by the function)
+</code></pre><br>
+                        <div>
+                            <h6>Sources</h6>
+                            <ol>
+                                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">MDN
+                                    - Functions</a></li>
+                                <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Parameter">MDN -
+                                    Parameter</a></li>
+                                <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function">MDN
+                                    - First-class Function</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    <section id="note-functions-expressions">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">function expressions</h1>
+                <p class="card-text">
+                    Since functions are treated as first-class citizens it is possible to define a function
+                    as an expression. This can be useful if you want to assign a function to a variable.<br><br>
+
+                    It is possible to do by either assigning the function with a function name (a named function
+                    expression)
+                    or without (an anonymous function expression).<br><br>
+
+                    One of the benefits of providing a name is that if an error is encountered,
+                    the stack trace will contain the name of the function, making it easier to find the origin
+                    of the error.
+                </p>
+
+                <h6>Example of a named function expression</h6>
+                        <pre><code class="language-javascript">const addTwoNumbers = function myFunction(number1, number2) {
+    return number1 + number2;
+}</code></pre><br>
+
+                        <h6>Example of an anonymous function expression</h6>
+                        <pre><code class="language-javascript">const addTwoNumbers = function(number1, number2) {
+    return number1 + number2;
+}</code></pre><br>
+                        <div>
+                            <h6>Sources</h6>
+                            <ol>
+                                <li>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions#the_function_expression_function_expression">MDN
+                                        - Function Expressions</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    <section id="note-functions-arrow">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">arrow functions</h1>
+                <p class="card-text">
+                    An arrow function is an alternative to a traditional function expression.
+                    They can roughly be compared to lambda functions, as seen in Java or Python.
+                    They are anonymous in the sense that they have no name, and operate in context of their
+                    enclosing scope.
+                    For example in a surrounding function.<br><br>
+
+                    Arrow functions are created without the <code class="language-javascript">function</code> keyword
+                    and requires
+                    an arrow <code class="language-javascript">=></code> to be placed between the argument(s) and
+                    opening body bracket.<br><br>
+                    The <code class="language-javascript">return</code> keyword is also omitted as the result of the
+                    expression will be returned by the function.
+                </p><br>
+
+                <h6>Core Syntax</h6>
+                        <pre><code class="language-javascript">(argument1, argument2, ... argumentN) => {
+    // function body
+}</code></pre><br>
+
+                        <p class="card-text">
+                            It is possible to omit the enclosing brackets if the function body is a single
+                            expression:
+                        </p>
+
+                        <code class="language-javascript">const addNumbers = (a, b) => a + b;</code><br><br>
+
+                        <p class="card-text">... also possible to omit the parenthesis if only a single argument is
+                            provided:
+                        </p>
+
+                        <code class="language-javascript">const getFirst = array => array[0];</code><br><br>
+
+                        <p class="card-text">... and possible to omit any arguments:
+                        </p>
+
+                        <pre><code class="language-javascript">const myArrowFunction = () => {
+    console.log("Hello world");
+}</code></pre><br>
+
+                        <p class="card-text">
+                            Arrow functions are particularly useful when you want to utilize function functionality
+                            "here and now". In other words, wanting to call a given function, without having the need
+                            for calling it again.<br><br>
+                            This could be when passing the function as an argument (a callback function). Examples could
+                            be when utilizing Array methods like
+                            <code class="language-javascript">map</code>
+                            <code class="language-javascript">forEach</code>
+                            <code class="language-javascript">filter</code>
+                            and so on...
+                        </p>
+
+                        <div>
+                            <h6>Sources</h6>
+                            <ol>
+                                <li>
+                                    <a href="https://zendev.com/2018/10/01/javascript-arrow-functions-how-why-when.html">zendev
+                                        - JavaScript Arrow Functions: How, Why, When</a></li>
+                                <li>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">MDN
+                                        - Arrow function expressions</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    <section id="note-functions-callback">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">callback functions</h1>
+                <p class="card-text">
+                    A callback function is a function that is passed into another function as an argument.
+                    This function is then invoked inside the outer function (also called a higher-order function), at a
+                    "later time".<br>
+                    Usually this outer function will implement some type of logic that defines when the
+                    callback function gets executed.<br><br>
+
+                    When passing a named function as a callback it is important to pass only the function name
+                    and not appending parenthesis as you want to pass the reference, and not call the actual
+                    function.<br><br>
+
+                    Two types of callback functions exist. <br>
+
+                    Synchronous, which is executed immediately - and asynchronous which will be executed at a later
+                    time,
+                    defined by the function in which the callback is passed to.
+                </p><br>
+                <h5>Example of a synchronous callback</h5>
+                        <pre><code class="language-javascript">function sayHiLater(functionReference) {
+// Some code to be run
+functionReference();
+
+function sayHi = () => {
+    console.log("Hi!");
+}
+
+sayHiLater(sayHi);</code></pre><br>
+                        <div>
+                            <h6>Sources</h6>
+                            <ol>
+                                <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Callback_function">MDN -
+                                    Callback function</a></li>
+                                <li>
+                                    <a href="https://www.freecodecamp.org/news/what-is-a-callback-function-in-javascript/">freecodecamp
+                                        - What is a Callback Function in JavaScript?</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    <section id="note-variables">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">variables</h1>
+                <p class="card-text">
+                    Variables in Javascript act as references.
+                    These references can be used to point to functions, expressions, objects or primitive types.<br><br>
+
+                    Javascript variables are loosely-typed which means they do not require data types to be declared.
+                    As such it is possible to change a variable from holding an Object to a Number.<br><br>
+
+                    It is possible to declare a variable without initializing it. This will give it the type of
+                    <code class="language-javascript">undefined</code>.<br><br>
+
+                    Three types of variables exist in Javascript:
+                </p>
+<pre><code class="language-javascript">// global or function scope, can be re-assigned
+var myVar;
+
+// block scope, can be re-assigned
+let myLet;
+
+// block scope, constant (read-only, value is not immutable)
+// can't be re-assigned
+const myConst = "Must be initialized instantly";</code></pre><br>
+
+                        <h5><code class="language-javascript">var</code></h5>
+                        <p class="card-text">
+                            <b>Scope:</b> Global or function<br>
+                            <b>Can be re-assigned:</b> Yes<br><br>
+
+                            The <code class="language-javascript">var</code> statement is the original way of declaring
+                            variables in Javascript.
+                            A <code class="language-javascript">var</code> variable will have global scope, unless
+                            defined within a function,
+                            which will provide it with function scope.<br>
+                            It is also able to be re-assigned.<br><br>
+                            It was once widely used before the introduction of let and const.
+                            However the global/function scope proved to be quite problematic, hence the introduction of
+                            the latter two.<br>
+                            Part of the reason why it has been kept in the language is due to backwards-compatibility.
+                        </p><br>
+
+                        <h5><code class="language-javascript">let</code></h5>
+                        <p class="card-text">
+                            <b>Scope:</b> Block<br>
+                            <b>Can be re-assigned:</b> Yes<br><br>
+
+                            The <code class="language-javascript">let</code> statement declares a block-scoped variable.<br>
+                            Block-scope is defined as being between a pair of curly brackets.<br><br>
+                            In other words a <code class="language-javascript">let</code> variable could be declared
+                            inside a function,
+                            or a loop, and have its scope contained herein.<br><br>
+
+                            It is used when one wants to declare a non-global variable, that might be re-assigned later.
+                        </p><br>
+
+                        <h5><code class="language-javascript">const</code></h5>
+                        <p class="card-text">
+                            <b>Scope:</b> Block<br>
+                            <b>Can be re-assigned:</b> No<br><br>
+                            The <code class="language-javascript">const</code> statement declares a block-scoped
+                            variable,
+                            like variables declared using <code class="language-javascript">let</code>.<br><br>
+
+                            The value of a constant can't be changed through reassignment and can't be
+                            redeclared.<br><br>
+                            The <code class="language-javascript">const</code> declaration is a read-only reference to
+                            value.
+                            This however, does not mean the value it holds is immutable, but that the identifier cannot
+                            be reassigned.<br><br>
+
+                            So if an Object was to be assigned to a <code class="language-javascript">const</code>
+                            variable, it would be possible to alter the state of said Object.<br><br>
+
+                            <code class="language-javascript">const</code> variables must be initialized upon
+                            declaration.
+                            This makes sense given that it is not possible to re-assign a value to the variable.
+
+
+                        </p><br>
+
+                        <div>
+                            <h6>Sources</h6>
+                            <ol>
+                                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">MDN
+                                    - JavaScript data types and data structures</a></li>
+                                <li><a href="https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/">freecodecamp
+                                    - Var, Let, and Const – What's the Difference?</a></li>
+                                <li>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block">MDN
+                                        - block</a></li>
+                                <li>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var">MDN
+                                        - var</a></li>
+                                <li>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let">MDN
+                                        - let</a></li>
+                                <li>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const">MDN
+                                        - const</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    <section id="note-method-map">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">map method</h1>
+                <p class="card-text">
+                    The <code class="language-javascript">map</code> method is available for every array created in
+                    Javascript.<br><br>
+                    It is used to loop through an array and perform a provided callback function, once for each element
+                    in the array. While doing this the method constructs a new array, which is returned when
+                    no more elements can be traversed in the original array.<br><br>
+
+                    The map method does not mutate the array on which it is called, and should only be used when
+                    it is desirable to create a new array from performing operations on an existing one.<br><br>
+
+                    The method takes a <code class="language-javascript">callback</code> as the first argument,
+                    which is called on every element of the array. <br>
+                    This argument in turn takes the following arguments:<br>
+                </p>
+                <h6>required</h6>
+                <p class="card-text">
+                    <code class="language-javascript">currentValue</code> which is the current element being processed.
+                </p>
+
+                <h6>optional</h6>
+                <p class="card-text">
+                    <code class="language-javascript">index</code> which is the index of the current element being
+                    processed.
+                </p><br>
+
+                <p class="card-text">More arguments are available, as seen in the source link.</p><br>
+
+                <h5>Example from class</h5>
+<pre><code class="language-javascript">// creates and populates a fruits array
+const fruits = ["apples", "bananas", "blueberries"]
+
+// prints out every fruit by using the console.log function
+fruits.map(fruit => console.log(fruit))
+
+// creates a new fruits array.
+// Every fruit element in the original array is turned into an object,
+// with its own id corresponding to the id in the original array,
+// the original fruit value and a description.
+const copiedFruits = fruits.map((fruit, index) => {
+    return { id: index, fruit, delicious: "yes yes yes"}
+})
+
+</code></pre><br>
+                <div>
+                    <h6>Sources</h6>
+                    <ol>
+                        <li>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">MDN
+                                - Array.prototype.map()</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="note-method-reduce">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">reduce method</h1>
+                <p class="card-text">
+                    The <code class="language-javascript">reduce</code> method is available for every array created in
+                    Javascript.<br><br>
+                    It is used to loop through an array and execute a callback (a reducer function) on each element of
+                    the array,
+                    resulting in a single output value.<br><br>
+
+                    The method takes a <code class="language-javascript">callback</code> as the first argument,
+                    which is called on every element of the array. <br>
+                    This argument in turn takes the following arguments:<br>
+                </p>
+
+                <h6>required</h6>
+                <p class="card-text">
+                    <code class="language-javascript">accumulator</code> which accumulates the callbacks return
+                    values.<br>
+                    This means that for every element, the output of the callback is stored in the accumulator.<br><br>
+                    <code class="language-javascript">currentValue</code> which is the current element being processed.
+                </p>
+
+                <h6>optional</h6>
+                <p class="card-text">
+                    <code class="language-javascript">index</code> which is the index of the current element being
+                    processed.
+                </p><br>
+
+                <p class="card-text">More arguments are available, as seen in the source link.</p><br>
+
+                <h5>Example from class</h5>
+<pre><code class="language-javascript">// define an array of people
+const people = [
+    {
+        name: "John",
+        age: "50"
+    },
+    {
+        name: "Lis",
+        age: "20"
+    },
+    {
+        name: "Bent",
+        age: "30"
+    }
+]
+
+// save the result of the reduce method to the variable peopleAgeSum
+// In this example the method is used to add all the peoples ages together.
+const peopleAgeSum =
+    people.reduce((accumulator, person) => accumulator + person.age, 0);
+</code></pre><br>
+                <div>
+                    <h6>Sources</h6>
+                    <ol>
+                        <li>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce">MDN
+                                - Array.prototype.reduce()</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="note-operator-spread">
+        <div class="card card-note text-center">
+            <div class="card-body">
+                <h1 class="card-title display-6">spread operator</h1>
+                <p class="card-text">
+                    The spread operator <code class="language-javascript">...</code> (or spread syntax)
+                    is a very useful tool in Javascript.<br>
+                    It allows for an iterable, say an array, or object, to be expanded, meaning that the iterable is
+                    "opened"
+                    and its values are "extracted". <br><br>
+
+                    This can be useful in a number of scenarios when dealing with with iterables:
+                </p><br>
+
+                <h5>Passing an iterables elements as arguments to a function</h5>
+
+<pre><code class="language-javascript">function sum(x, y, z) {
+  return x + y + z
+}
+
+const numbers = [1, 2, 3]
+
+console.log(sum(...numbers)) // output: 6
+</code></pre><br>
+
+                <h5>Adding elements to existing array</h5>
+<pre><code class="language-javascript">let numbers = [10, 20, 30]
+let newNumbers = [40, 50, 60]
+let singleNewNumber = 70
+
+numbers = [...numbers, ...newNumbers, singleNewNumber]
+
+console.log(numbers) // output: [10, 20, 30, 40, 50, 60, 70]
+</code></pre>
+                <p class="card-text">
+
+                </p>
+
+                <h5>Combining 2 objects</h5>
+                <p class="card-text">
+                    When dealing with objects things get a little more tricky.
+                    This is because when objects are expanded they are not expanded into single values, but key:value
+                    pairs.<br><br>
+                    This needs to be handled in some way.<br>
+                    One way could be to combine the key:value pairs into a new object.<br><br>
+                    Another thing to keep in mind is that if the objects contain keys with the same names,
+                    any such keys will be overridden by the key:value pair with the same key from the last object.
+                </p><br>
+
+                <h6>2 objects with same keys defined</h6>
+                <pre><code class="language-javascript">let person1 = {
+    name: "Gunnar Gunnarsson",
+    message: "Hej"
+}
+
+let person2 = {
+    name: "John Doe",
+    message: "Hello"
+}
+
+console.log({ ...person1, ...person2 })
+/* output:
+{
+    name: 'John Doe',
+    message: 'Hello'
+}
+*/
+</code></pre><br>
+
+                <h6>2 objects with different keys defined</h6>
+                <pre><code class="language-javascript">let person1 = {
+    name: "Gunnar Gunnarsson",
+    message: "Hej"
+}
+
+let person2 = {
+    name2: "John Doe",
+    message2: "Hello"
+}
+
+console.log({ ...person1, ...person2 })
+/* output:
+{
+    name: 'Gunnar Gunnarsson',
+    message: 'Hej',
+    name2: 'John Doe',
+    message2: 'Hello'
+}
+*/
+</code></pre>
+                <br>
+                <div>
+                    <h6>Sources</h6>
+                    <ol>
+                        <li>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">MDN
+                                - Spread syntax</a></li>
+                        <li>
+                            <a href="https://medium.com/coding-at-dawn/how-to-use-the-spread-operator-in-javascript-b9e4a8b06fab">Medium
+                                - How to Use the Spread Operator (…) in JavaScript</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <a class="btn btn-primary" id="goto-top-button" href="#">Go to top</a>
+</main>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/prism.js"></script>
+</body>
+</html>
