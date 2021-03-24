@@ -1,4 +1,4 @@
-# nodejs-mandatory-express-notes
+# Node.js elective - Mandatory assignment
 Mandatory hand-in for nodejs elective at KEA Datamatiker on 4th semester.
 <br /><br />
 
