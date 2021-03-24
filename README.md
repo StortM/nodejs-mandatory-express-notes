@@ -1,4 +1,4 @@
-# Node.js elective - Mandatory assignment
+# Mandatory assignment - KEA Datamatiker - Fullstack Node.js (Spring 2021)
 Mandatory hand-in for nodejs elective at KEA Datamatiker on 4th semester.
 <br /><br />
 
