@@ -29,6 +29,5 @@ app.listen(port, (err) => {
         console.log(err)
     } else {
         console.log("Express listening at", Number(port))
-        console.log(__dirname)
     }
 })
